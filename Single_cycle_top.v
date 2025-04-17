@@ -109,6 +109,6 @@ module Single_Cycle_Top (
     );
 
     // PC increment (for now, assume PC + 4)
-    assign pc_next = pc_current + 4;
+    assign pc_next = pc_current + 32'd4;
 
 endmodule
