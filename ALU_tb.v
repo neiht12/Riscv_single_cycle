@@ -26,7 +26,7 @@ module alu_tb;
         $display("ADD: A = %h, B = %h, Result = %h, Z_flag = %b, N_flag = %b, C_flag = %b, V_flag = %b", A, B, Result, Z_flag, N_flag, C_flag, V_flag);
 
         // Test Case 2: Subtraction (ALUControl = 0001)
-        A = 32'h00000005; B = 32'h00000003; ALUControl = 4'b0001;  // SUB
+        A = 32'hFFFFFFFF; B = 32'h00000000; ALUControl = 4'b0001;  // SUB
         #10;
         $display("SUB: A = %h, B = %h, Result = %h, Z_flag = %b, N_flag = %b, C_flag = %b, V_flag = %b", A, B, Result, Z_flag, N_flag, C_flag, V_flag);
 

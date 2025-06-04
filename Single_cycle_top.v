@@ -6,6 +6,7 @@
 `include "Sign_ext.v"
 `include "Control_unit_top.v"
 `include "Mux.v"
+`include "PC_adder.v"
 
 module Single_Cycle_Top (
     input clk,
@@ -28,6 +29,11 @@ module Single_Cycle_Top (
         .PC_NEXT(pc_next),
         .PC(pc_current)
     ); 
+    PC_Adder pc_adder (
+        .a(pc_current),
+        .b(32'd4),
+        .c(pc_next)
+    );
 
     // Instruction Memory
     I_mem instruction_memory (
@@ -91,7 +97,7 @@ module Single_Cycle_Top (
     );
 
     // Data Memory
-    D_mem data_memory (
+    Data_Memory data_memory (
         .A(alu_result),
         .WD(reg_data2),
         .WE(mem_write_enable),
@@ -108,7 +114,6 @@ module Single_Cycle_Top (
         .output_c(result_to_register)
     );
 
-    // PC increment (for now, assume PC + 4)
-    assign pc_next = pc_current + 32'd4;
+
 
 endmodule

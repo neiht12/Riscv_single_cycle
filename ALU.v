@@ -11,6 +11,7 @@ module alu(
     wire [31:0] a_and_b = A & B; 
     wire [31:0] a_or_b  = A | B;
     wire [31:0] not_b   = ~B;
+    
 
     wire [31:0] b_mux   = (ALUControl[0] == 1'b0) ? B : not_b;
     wire [31:0] sum;
@@ -42,7 +43,8 @@ module alu(
     assign Result  = mux_out;
     assign Z_flag  = (Result == 32'b0);            // Zero flag
     assign N_flag  = Result[31];                   // Negative flag
-    assign C_flag  = carry_out & ~ALUControl[1];   // Carry only for ADD
+    assign C_flag  = carry_out & ~ALUControl[0];   // Carry only for ADD
     assign V_flag  = (~ALUControl[1]) & (A[31] ^ sum[31]) & ~(A[31] ^ B[31] ^ ALUControl[0]); // Overflow
+
 
 endmodule

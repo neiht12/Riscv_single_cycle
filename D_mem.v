@@ -1,4 +1,4 @@
-module D_mem(clk,rst,WE,WD,A,RD);
+module Data_Memory(clk,rst,WE,WD,A,RD);
 
     input clk,rst,WE;
     input [31:0]A,WD;
@@ -15,8 +15,9 @@ module D_mem(clk,rst,WE,WD,A,RD);
     assign RD = (~rst) ? 32'd0 : mem[A];
 
     initial begin
-        mem[28] = 32'h00000020;
-        //mem[40] = 32'h00000002;
+        // mem[0] = 32'h00000002;
+        mem[28] = 32'd1234;
+        // mem[40] = 32'h12345678;
     end
 
 

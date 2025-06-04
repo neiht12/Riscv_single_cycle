@@ -1,0 +1,76 @@
+`timescale 1ns/1ps
+
+module Control_Unit_Top_Tb;
+
+    // Inputs
+    reg [6:0] Op;
+    reg [6:0] funct7;
+    reg [2:0] funct3;
+
+    // Outputs
+    wire RegWrite, ALUSrc, MemWrite, ResultSrc, branch;
+    wire [3:0] ALUControl;
+    wire [1:0] ImmSrc;
+
+    // Instantiate the Unit Under Test (UUT)
+    Control_Unit_Top uut (
+        .Op(Op),
+        .RegWrite(RegWrite),
+        .ImmSrc(ImmSrc),
+        .ALUSrc(ALUSrc),
+        .MemWrite(MemWrite),
+        .ResultSrc(ResultSrc),
+        .branch(branch),
+        .funct3(funct3),
+        .funct7(funct7),
+        .ALUControl(ALUControl)
+    );
+
+    // Task for displaying outputs
+    task display_outputs;
+        begin
+            $display("Time: %0t ns", $time);
+            $display("Op = %b, funct3 = %b, funct7 = %b", Op, funct3, funct7);
+            $display("RegWrite = %b, ALUSrc = %b, MemWrite = %b, ResultSrc = %b, branch = %b", 
+                     RegWrite, ALUSrc, MemWrite, ResultSrc, branch);
+            $display("ImmSrc = %b, ALUControl = %b", ImmSrc, ALUControl);
+            $display("-------------------------------");
+        end
+    endtask
+
+    initial begin
+        // Test R-type (ADD)
+        Op = 7'b0110011; // R-type
+        funct3 = 3'b000;
+        funct7 = 7'b0000000;
+        #10; display_outputs();
+
+        // Test R-type (SUB)
+        funct7 = 7'b0100000;
+        #10; display_outputs();
+
+        // Test I-type (ADDI)
+        Op = 7'b0010011; // I-type
+        funct3 = 3'b000;
+        funct7 = 7'b0000000;
+        #10; display_outputs();
+
+        // Test LW
+        Op = 7'b0000011;
+        funct3 = 3'b010;
+        #10; display_outputs();
+
+        // Test SW
+        Op = 7'b0100011;
+        funct3 = 3'b010;
+        #10; display_outputs();
+
+        // Test BEQ
+        Op = 7'b1100011;
+        funct3 = 3'b000;
+        #10; display_outputs();
+
+        $finish;
+    end
+
+endmodule

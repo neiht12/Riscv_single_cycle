@@ -4,7 +4,6 @@ module main_decoder(op,RegWrite,MemWrite,ResultSrc,ALUSrc,ImmSrc,ALUOp,branch);
     output [1:0] ALUOp;
     output [1:0] ImmSrc;
 
-    wire branch;
 
     assign RegWrite = (op == 7'b0000011 | op == 7'b0110011) ? 1'b1 :
                                                               1'b0 ;
